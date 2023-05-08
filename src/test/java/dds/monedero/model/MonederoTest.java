@@ -79,4 +79,14 @@ public class MonederoTest {
     assertEquals(200, cuenta.getMontoExtraidoA(LocalDate.now()));
   }
 
+  @Test
+  void deberiaValidarElMontoNegativo() {
+    assertThrows(MontoNegativoException.class, () -> cuenta.validarMontoIngresado(-500));
+  }
+
+  @Test
+  void deberiaValidarElMontoPositivo() {
+    assertDoesNotThrow(() -> cuenta.validarMontoIngresado(500));
+  }
+
 }
