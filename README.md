@@ -28,7 +28,44 @@ Tenés seis tareas:
     *  [Entrada de Blog (en español)](https://www.paradigmadigital.com/dev/nos-espera-junit-5/)
 * Maven 3.3 o superior
  
+## Solucion
 
+### Code Smells:
+1. Duplicated code en `Cuenta` `poner` y `sacar`
+```
+   if (cuanto <= 0) { 
+   throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
+   }
+```
+2. Numeros Magicos en `Cuenta`:
+```
+double limite = 1000 - montoExtraidoHoy;
+
+if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
+
+```
+3. Long Method en `Cuenta` `poner` y `sacar`
+4. Message Chain en `Cuenta` `getMontoExtraidoA`
+```
+movimiento.getFecha().equals(fecha)
+```
+5. Misplaced Method en `Movimiento` `agregateA` 
+```
+  public void agregateA(Cuenta cuenta) {
+    cuenta.setSaldo(calcularValor(cuenta));
+    cuenta.agregarMovimiento(fecha, monto, esDeposito);
+  }
+```
+6. Type Test y Misplaced Method en `Movimiento` `calcularValor`
+```
+  public double calcularValor(Cuenta cuenta) {
+    if (esDeposito) { // type test
+      return cuenta.getSaldo() + getMonto();
+    } else {
+      return cuenta.getSaldo() - getMonto();
+    }
+  }
+```
   
 
 
