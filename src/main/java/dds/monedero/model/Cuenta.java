@@ -30,14 +30,14 @@ public class Cuenta {
 
   public void poner(double cuanto) {
     validarDepositoDeMonto(cuanto);
-
-    new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
+    saldo = saldo + cuanto;
+    agregarMovimiento(LocalDate.now(), cuanto, true);
   }
 
   public void sacar(double cuanto) {
     validarExtraccionDeMonto(cuanto);
-
-    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
+    saldo = saldo - cuanto;
+    agregarMovimiento(LocalDate.now(), cuanto, false);
   }
 
   public void validarMontoIngresado(double cuanto) {
